@@ -4,7 +4,7 @@ from setuptools import find_namespace_packages, setup
 
 setup(
     name="pointevector-chive",
-    version="0.1.0",
+    version="0.1.1",
     description="An archival tool with hash tree file integrity",
     author="Andrew Hoekstra",
     email="andrew@pointevector.com",

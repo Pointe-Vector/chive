@@ -22,7 +22,9 @@ class Args:
 
 def load_metadata(manifest: pathlib.Path):
     with common.load_manifest(manifest) as conn:
-        return conn.execute("SELECT id, version FROM metadata;").fetchone()
+        return conn.execute(
+            "SELECT archive_id, copy_id, version FROM metadata;"
+        ).fetchone()
 
 
 def gen_files(manifest: pathlib.Path):
@@ -42,7 +44,11 @@ def gen_hashes(blob: IO[bytes], *, hash_method: hashtree.HashMethod):
 
 def main(args: Args):
     # Check metadata
-    if load_metadata(args.manifest) != load_metadata(args.reference):
+    m_metadata = load_metadata(args.manifest)
+    r_metadata = load_metadata(args.reference)
+    if m_metadata["archive_id"] != r_metadata["archive_id"]:
+        raise ValueError
+    if m_metadata["copy_id"] == r_metadata["copy_id"]:
         raise ValueError
 
     # Check file info

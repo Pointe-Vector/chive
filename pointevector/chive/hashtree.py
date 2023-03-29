@@ -5,7 +5,6 @@ import hashlib
 import math
 import pathlib
 from typing import Callable, IO, Union
-import zlib
 
 
 logger = logging.getLogger()
